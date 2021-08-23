@@ -1,0 +1,35 @@
+﻿@model List<MoveType>
+
+
+        @foreach (var item in Model)
+        {
+            <button value="@item.ID" class="btn p-3 btn-dark">@item.Type</button>
+        }
+<a class="btn p-3 btn-dark" asp-controller="Home" asp-action="AllMove">جميع العمليات</a>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+        $(function () {
+            $(".btn").click(function () {
+                $.ajax({
+                    url: '@Url.Action("ChekData", "Home")',
+                    dataType: "json",
+                    type: "GET",
+                    data: {
+                        tid: $(this).val()
+                    },
+                    contentType: "application/json;",
+                    success: function (data) {
+                        alert(data);
+
+                       }, error: function (jqXHR, textStatus, errorThrown) {
+                           console.log('ERROR')
+                    }
+                });
+            })
+
+        })
+</script>

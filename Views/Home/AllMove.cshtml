@@ -1,0 +1,67 @@
+﻿@model List<MovementRecord>
+
+
+<style>
+    .notfound {
+        display: none;
+    }
+</style>
+
+
+<div class="row clearfix g-3">
+    <div class="col-sm-12">
+        <input class="form-control my-2 p-2" type="search" id="txt_searchall" placeholder="ابحث هنا " />
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <table class="table text-center table-hover border mb-0" style="width:100%">
+                    <thead>
+                        <tr class="bg-dark text-white">
+                            <th>#</th>
+                            <th>العملية</th>
+                            <th>اليوم</th>
+                            <th>التاريخ</th>
+                            <th>الوقت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.MoveType.Type</td>
+                                <td>@item.MoveDate.DayOfWeek</td>
+                                <td>@item.MoveDate.ToShortDateString()</td>
+                                <td>@item.MoveDate.ToShortTimeString()</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+
+    $('#txt_searchall').keyup(function () {
+        var search = $(this).val();
+
+        $('table tbody tr').hide();
+        var len = $('table tbody tr:not(.notfound) td:contains("' + search + '")').length;
+
+        if (len > 0) {
+            $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function () {
+                $(this).closest('tr').show();
+            });
+        } else {
+            $('.notfound').show();
+        }
+
+    });
+
+
+   
+</script>
